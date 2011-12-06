@@ -6,11 +6,8 @@ type Node interface {
 }
 
 type DumbNode struct {
-	weight1 float64
-	weight2 float64
-	child1  Node
-	child2  Node
-
+	weight []float64
+	child  []Node
 	output float64
 }
 
@@ -27,7 +24,10 @@ func (i *Input) Status() float64 {
 }
 
 func (i *DumbNode) Process() {
-	i.output = i.weight1 * i.child1.Status() + i.weight2 * i.child2.Status()
+	i.output = 0
+	for c := range i.weight {
+		i.output += i.weight[c] * i.child[c].Status()
+	}
 }
 
 func (i *DumbNode) Status() float64 {
@@ -37,10 +37,9 @@ func (i *DumbNode) Status() float64 {
 func main() {
 	println("Hello, world")
 
-	i1 := Input{0.0}
-	i2 := Input{0.0}
-
-	n := &DumbNode{0.9, 0.1, &i1, &i2, 0.0}
+	i1 := &Input{0.0}
+	i2 := &Input{0.1}
+	n := &DumbNode{[]float64{0.1, 0.6}, []Node{i1, i2}, 0}
 	n.Process()
 	println(n.Status())
 	train(n)
