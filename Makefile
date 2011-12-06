@@ -5,3 +5,6 @@ GOFILES = hebconj.go
 
 include ${GOROOT}/src/Make.cmd
 
+fmt:
+	gofmt -w ${GOFILES}
+
