@@ -1,5 +1,7 @@
 package main
 
+import "math"
+
 type Node interface {
 	Process()
 	Status() bool
@@ -10,6 +12,8 @@ type DumbNode struct {
 	weight2 float64
 	child1  Node
 	child2  Node
+	
+	output  bool
 }
 
 type Input struct {
@@ -25,7 +29,11 @@ func (i *Input) Status() bool {
 }
 
 func (i *DumbNode) Process() {
+    i.output = math.Floor(i.weight1 * i.weight2) == 1
+}
 
+func (i *DumbNode) Status() bool {
+    return i.output
 }
 
 func main() {
@@ -34,7 +42,7 @@ func main() {
 	i1 := Input{false}
 	i2 := Input{false}
 
-	n := DumbNode{0.9, 0.1, &i1, &i2}
+	n := &DumbNode{0.9, 0.1, &i1, &i2, false}
 	train(n)
 }
 
