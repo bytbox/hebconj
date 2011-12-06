@@ -21,7 +21,7 @@ type Input struct {
 }
 
 func (i *Input) Process() {
-
+	// nothing to be done
 }
 
 func (i *Input) Status() bool {
